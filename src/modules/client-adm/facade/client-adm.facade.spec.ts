@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript"
 import { ClientModel } from "../repository/client.model"
 import ClientAdmFacadeFactory from "../factory/client-adm.facade.factory"
+import Address from "../../@shared/domain/value-object/address.value-object"
 
 describe('Client Adm facade test', () => {
     let sequelize: Sequelize
@@ -30,7 +31,16 @@ describe('Client Adm facade test', () => {
             id: "1",
             name: "Client",
             email: "x@x.com",
-            address: "Adress",
+            document: "1234-5678",
+            address: new Address(
+                {
+                    street: "Rua 123",
+                    number: "99",
+                    complement: "Casa Verde",
+                    city: "Criciúma",
+                    state: "SC",
+                    zipCode: "88888-888",
+                })
         }
 
         await clientFacade.add(input)
@@ -39,7 +49,8 @@ describe('Client Adm facade test', () => {
         expect(client.id).toBe(input.id)
         expect(client.name).toBe(input.name)
         expect(client.email).toBe(input.email)
-        expect(client.address).toBe(input.address)
+        expect(client.document).toBe(input.document)
+        expect(client.street).toBe(input.address.street)
     })
 
 
@@ -49,9 +60,15 @@ describe('Client Adm facade test', () => {
             id: "1",
             name: "Client",
             email: "x@x.com",
-            address: "Adress",
+            document: "1234-5678",
+            street: "Rua 123",
+            number: "99",
+            complement: "Casa Verde",
+            city: "Criciúma",
+            state: "SC",
+            zipcode: "0000",
             createdAt: new Date(),
-            updatedAt: new Date(),
+            updatedAt: new Date()
         })
 
         const input = {
@@ -63,6 +80,12 @@ describe('Client Adm facade test', () => {
         expect(output.id).toBe(client.id)
         expect(output.name).toBe(client.name)
         expect(output.email).toBe(client.email)
-        expect(output.address).toBe(client.address)
+        expect(output.document).toBe(client.document)
+        expect(output.address.street).toBe(client.street)
+        expect(output.address.number).toBe(client.number)
+        expect(output.address.complement).toBe(client.complement)
+        expect(output.address.city).toBe(client.city)
+        expect(output.address.state).toBe(client.state)
+        expect(output.address.zipCode).toBe(client.zipcode)
     })
 })

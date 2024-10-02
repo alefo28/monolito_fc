@@ -1,3 +1,4 @@
+import Address from "../../../@shared/domain/value-object/address.value-object"
 import AddClientUseCase from "./add-client.usecase"
 
 describe('Add client usecase unit test', () => {
@@ -16,7 +17,17 @@ describe('Add client usecase unit test', () => {
         const input = {
             name: "Client 1",
             email: "x@x.com",
-            address: "Address 1"
+            document: "1234-5678",
+            address:
+            {
+                street: "Rua 123",
+                number: "99",
+                complement: "Casa Verde",
+                city: "Criciúma",
+                state: "SC",
+                zipCode: "88888-888",
+            }
+
         }
 
         const output = await usecase.execute(input)

@@ -5,7 +5,6 @@ import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
     timestamps: false
 })
 export class ClientModel extends Model {
-
     @PrimaryKey
     @Column({ allowNull: false })
     id: string
@@ -17,7 +16,25 @@ export class ClientModel extends Model {
     email: string
 
     @Column({ allowNull: false })
-    address: string
+    document: string
+
+    @Column({ allowNull: false })
+    street: string
+
+    @Column({ allowNull: false })
+    number: string
+
+    @Column({ allowNull: true })
+    complement: string
+
+    @Column({ allowNull: false })
+    city: string
+
+    @Column({ allowNull: false })
+    state: string
+
+    @Column({ allowNull: false })
+    zipcode: string
 
     @Column({ allowNull: false })
     createdAt: Date

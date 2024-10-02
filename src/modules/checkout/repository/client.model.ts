@@ -1,11 +1,11 @@
 import { Column, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { InvoiceItemsModel } from "./invoice-items.model";
+import { OrderModel } from "./order.model";
 
 @Table({
-    tableName: "invoices",
+    tableName: "clients",
     timestamps: false
 })
-export class InvoiceModel extends Model {
+export class ClientModel extends Model {
 
     @PrimaryKey
     @Column({ allowNull: false })
@@ -15,11 +15,11 @@ export class InvoiceModel extends Model {
     name: string
 
     @Column({ allowNull: false })
+    email: string
+
+    @Column({ allowNull: false })
     document: string
 
-    @HasMany(() => InvoiceItemsModel, { foreignKey: 'invoiceId' })
-    items: InvoiceItemsModel[];
-    
     @Column({ allowNull: false })
     street: string
 
@@ -36,13 +36,17 @@ export class InvoiceModel extends Model {
     state: string
 
     @Column({ allowNull: false })
-    zipCode: string
+    zipcode: string
+
+    @HasMany(() => OrderModel, { foreignKey: 'clientId' })
+    orders: OrderModel[];
 
     @Column({ allowNull: false })
     createdAt: Date
 
     @Column({ allowNull: false })
     updatedAt: Date
+
 }
 
 

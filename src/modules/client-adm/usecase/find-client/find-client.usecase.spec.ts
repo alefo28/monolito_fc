@@ -1,3 +1,4 @@
+import Address from "../../../@shared/domain/value-object/address.value-object"
 import Id from "../../../@shared/domain/value-object/id.value-object"
 import Client from "../../domain/client.entity"
 import FindClientUseCase from "./find-client.usecase"
@@ -8,7 +9,17 @@ describe('Find client usecase unit test', () => {
         id: new Id("1"),
         name: "Client 1",
         email: "12e",
-        address: "Aadresds 1"
+        document: "1234-5678",
+        address: new Address(
+            {
+                street: "Rua 123",
+                number: "99",
+                complement: "Casa Verde",
+                city: "Criciúma",
+                state: "SC",
+                zipCode: "88888-888",
+            }
+        )
     })
 
     const MockRespository = () => {
