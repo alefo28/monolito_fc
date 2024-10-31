@@ -7,6 +7,22 @@ import { FindInvoiceUseCaseInputDTO } from "../../modules/invoice/usecase/find-i
 
 export const invoiceRoute = express.Router()
 
+invoiceRoute.get("/:id", async (req: Request, res: Response) => {
+
+    const usecase = new FindInvoiceUsecase(new InvoiceRepository());
+    try {
+        const invoiceDto: FindInvoiceUseCaseInputDTO = {
+            id: req.params.id
+        }
+
+        const output = await usecase.execute(invoiceDto)
+        res.send(output)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+
+})
+
 invoiceRoute.post("/", async (req: Request, res: Response) => {
     const usecase = new GenerateInvoiceUsecase(new InvoiceRepository())
 
@@ -34,18 +50,3 @@ invoiceRoute.post("/", async (req: Request, res: Response) => {
     }
 })
 
-invoiceRoute.get("/:id", async (req: Request, res: Response) => {
-
-    const usecase = new FindInvoiceUsecase(new InvoiceRepository());
-    try {
-        const invoiceDto: FindInvoiceUseCaseInputDTO = {
-            id: req.params.id
-        }
-
-        const output = await usecase.execute(invoiceDto)
-        res.send(output)
-    } catch (err) {
-        res.status(500).send(err)
-    }
-
-})

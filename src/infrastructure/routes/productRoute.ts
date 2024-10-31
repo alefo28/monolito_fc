@@ -25,7 +25,7 @@ productRoute.post("/", async (req: Request, res: Response) => {
             salesPrice: req.body.purchasePrice
         };
         const output = await usecase.execute(productDto)
-       await usecaseStore.execute(productStoreDto)
+        await usecaseStore.execute(productStoreDto)
         
         res.send(output)
     } catch (err) {
