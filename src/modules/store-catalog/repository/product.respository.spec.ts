@@ -1,6 +1,8 @@
 import { Sequelize } from "sequelize-typescript"
 import { ProductModel } from "./product.model"
 import ProductRepository from "./product.respository"
+import Id from "../../@shared/domain/value-object/id.value-object"
+import Product from "../domain/product.entity"
 
 describe('Product Repository test', () => {
     let sequelize: Sequelize
@@ -71,4 +73,35 @@ describe('Product Repository test', () => {
         expect(product.description).toBe("Description Product")
         expect(product.salesPrice).toBe(100)
     })
+
+    it("should update a product", async () => {
+        await ProductModel.create({
+            id: "p1",
+            name: "Product 1",
+            description: "Description 1",
+            salesPrice: 100,
+        });
+
+        const productRepository = new ProductRepository();
+        
+        const updateProduct = new Product({
+            id: new Id("p1"),
+            name: "Product 2",
+            description: "Description 2",
+            salesPrice: 200,
+        });
+
+        await productRepository.update(updateProduct);
+
+        const productDb = await ProductModel.findOne({
+            where: { id: "p1" },
+        });
+
+        const product = productDb.toJSON();
+
+        expect(product.id).toBe("p1");
+        expect(product.name).toBe("Product 2");
+        expect(product.description).toBe("Description 2");
+        expect(product.salesPrice).toBe(200);
+    });
 })
